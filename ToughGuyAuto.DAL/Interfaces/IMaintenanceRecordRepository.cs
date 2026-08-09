@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ToughGuyAuto.Models;
 
-namespace ToughGuyAuto.DAL.Interfaces
+namespace ToughGuyAuto.DAL.Interfaces;
+
+public interface IMaintenanceRecordRepository
 {
-    internal interface IMaintenanceRecordRepository
-    {
-    }
+    Task<List<MaintenanceRecord>> GetAllAsync();
+
+    Task<List<MaintenanceRecord>> GetByUserIdAsync(string userId);
+
+    Task<MaintenanceRecord?> GetByIdAsync(int id);
+
+    Task AddAsync(MaintenanceRecord record);
+
+    Task UpdateAsync(MaintenanceRecord record);
+
+    Task DeleteAsync(int id);
 }

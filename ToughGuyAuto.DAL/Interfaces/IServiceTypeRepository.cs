@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ToughGuyAuto.Models;
 
-namespace ToughGuyAuto.DAL.Interfaces
+namespace ToughGuyAuto.DAL.Interfaces;
+
+public interface IServiceTypeRepository
 {
-    internal interface IServiceTypeRepository
-    {
-    }
+    Task<List<ServiceType>> GetAllAsync();
+
+    Task<ServiceType?> GetByIdAsync(int id);
+
+    Task AddAsync(ServiceType serviceType);
+
+    Task UpdateAsync(ServiceType serviceType);
+
+    Task DeleteAsync(int id);
 }
