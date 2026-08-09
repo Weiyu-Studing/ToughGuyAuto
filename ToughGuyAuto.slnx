@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ToughGuyAuto.BLL/ToughGuyAuto.BLL.csproj" />
+  <Project Path="ToughGuyAuto.DAL/ToughGuyAuto.DAL.csproj" />
+  <Project Path="ToughGuyAuto.Models/ToughGuyAuto.Models.csproj" />
+  <Project Path="ToughGuyAuto/ToughGuyAuto.csproj" />
+</Solution>
