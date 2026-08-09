@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ToughGuyAuto.Models
+﻿namespace ToughGuyAuto.Models
 {
     public class Vehicle
     {
@@ -23,6 +17,8 @@ namespace ToughGuyAuto.Models
         public string VIN { get; set; } = string.Empty;
 
         public int Mileage { get; set; }
+
+        public ApplicationUser User { get; set; } = null!;
 
         public ICollection<MaintenanceRecord> MaintenanceRecords { get; set; }
             = new List<MaintenanceRecord>();

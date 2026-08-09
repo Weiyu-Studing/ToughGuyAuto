@@ -25,4 +25,8 @@
     <ProjectReference Include="..\ToughGuyAuto.Models\ToughGuyAuto.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>
