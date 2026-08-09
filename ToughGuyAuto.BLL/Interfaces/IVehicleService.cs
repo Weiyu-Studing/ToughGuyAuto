@@ -16,5 +16,9 @@ public interface IVehicleService
 
     Task UpdateAsync(Vehicle vehicle);
 
+    List<Vehicle> GetAll();
+
+    List<Vehicle> GetByUserId(string userId);
+
     Task DeleteAsync(int id);
 }
