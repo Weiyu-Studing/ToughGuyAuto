@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using ToughGuyAuto.DAL.Data;
+using ToughGuyAuto.Data;
+
 namespace ToughGuyAuto
 {
     public class Program
@@ -8,6 +13,20 @@ namespace ToughGuyAuto
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<ToughGuyAutoDbContext>(options =>
+            options.UseSqlServer(
+                builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            //Identity
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+            })
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<ToughGuyAutoDbContext>();
+
+
 
             var app = builder.Build();
 
