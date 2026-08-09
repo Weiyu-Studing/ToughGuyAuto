@@ -2,6 +2,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ToughGuyAuto.DAL.Data;
 using ToughGuyAuto.Data;
+using Microsoft.EntityFrameworkCore;
+using ToughGuyAuto.BLL.Interfaces;
+using ToughGuyAuto.BLL.Services;
+using ToughGuyAuto.DAL.Data;
+using ToughGuyAuto.DAL.Interfaces;
+using ToughGuyAuto.DAL.Repositories;
 
 namespace ToughGuyAuto
 {
@@ -26,7 +32,17 @@ namespace ToughGuyAuto
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ToughGuyAutoDbContext>();
 
+            builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+            builder.Services.AddScoped<IMaintenanceRecordRepository,
+                MaintenanceRecordRepository>();
+            builder.Services.AddScoped<IServiceTypeRepository,
+                ServiceTypeRepository>();
 
+            builder.Services.AddScoped<IVehicleService, VehicleService>();
+            builder.Services.AddScoped<IMaintenanceRecordService,
+                MaintenanceRecordService>();
+            builder.Services.AddScoped<IServiceTypeService,
+                ServiceTypeService>();
 
             var app = builder.Build();
 

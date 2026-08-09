@@ -1,0 +1,82 @@
+﻿using ToughGuyAuto.BLL.Interfaces;
+using ToughGuyAuto.DAL.Interfaces;
+using ToughGuyAuto.Models;
+
+namespace ToughGuyAuto.BLL.Services;
+
+public class VehicleService : IVehicleService
+{
+    private readonly IVehicleRepository _repository;
+
+    public VehicleService(IVehicleRepository repository)
+    {
+        _repository = repository;
+    }
+
+    public async Task<List<Vehicle>> GetAllAsync()
+    {
+        return await _repository.GetAllAsync();
+    }
+
+    public async Task<List<Vehicle>> GetUserVehiclesAsync(
+        string userId)
+    {
+        return await _repository.GetByUserIdAsync(userId);
+    }
+
+    public async Task<Vehicle?> GetByIdAsync(int id)
+    {
+        return await _repository.GetByIdAsync(id);
+    }
+
+    public async Task<bool> CanUserAccessAsync(
+        int vehicleId,
+        string userId)
+    {
+        var vehicle = await _repository.GetByIdAsync(vehicleId);
+
+        if (vehicle == null)
+        {
+            return false;
+        }
+
+        return vehicle.UserId == userId;
+    }
+
+    public async Task CreateAsync(Vehicle vehicle)
+    {
+        if (string.IsNullOrWhiteSpace(vehicle.Make))
+        {
+            throw new ArgumentException("Make is required.");
+        }
+
+        if (string.IsNullOrWhiteSpace(vehicle.Model))
+        {
+            throw new ArgumentException("Model is required.");
+        }
+
+        if (vehicle.Mileage < 0)
+        {
+            throw new ArgumentException(
+                "Mileage cannot be negative.");
+        }
+
+        await _repository.AddAsync(vehicle);
+    }
+
+    public async Task UpdateAsync(Vehicle vehicle)
+    {
+        if (vehicle.Mileage < 0)
+        {
+            throw new ArgumentException(
+                "Mileage cannot be negative.");
+        }
+
+        await _repository.UpdateAsync(vehicle);
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        await _repository.DeleteAsync(id);
+    }
+}
