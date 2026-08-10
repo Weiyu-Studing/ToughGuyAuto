@@ -6,7 +6,8 @@ public interface IMaintenanceRecordRepository
 {
     Task<List<MaintenanceRecord>> GetAllAsync();
 
-    Task<List<MaintenanceRecord>> GetByUserIdAsync(string userId);
+    Task<List<MaintenanceRecord>> GetByUserIdAsync(
+        string userId);
 
     Task<MaintenanceRecord?> GetByIdAsync(int id);
 

@@ -4,57 +4,70 @@
     ViewData["Title"] = "My Vehicles";
 }
 
-<h1>My Vehicles</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Vehicles</h1>
 
-<p>
     <a asp-action="Create" class="btn btn-primary">
         Add Vehicle
     </a>
-</p>
+</div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Year</th>
-            <th>Make</th>
-            <th>Model</th>
-            <th>Mileage</th>
-            <th></th>
-        </tr>
-    </thead>
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        You don't have any vehicles yet.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>License Plate</th>
+                    <th>VIN</th>
+                    <th>Mileage</th>
+                    <th></th>
+                </tr>
+            </thead>
 
-    <tbody>
-        @foreach (var vehicle in Model)
-        {
-            <tr>
-                <td>@vehicle.Year</td>
-                <td>@vehicle.Make</td>
-                <td>@vehicle.Model</td>
-                <td>@vehicle.Mileage km</td>
+            <tbody>
+                @foreach (var vehicle in Model)
+                {
+                    <tr>
+                        <td>@vehicle.Make</td>
+                        <td>@vehicle.Model</td>
+                        <td>@vehicle.Year</td>
+                        <td>@vehicle.LicensePlate</td>
+                        <td>@vehicle.VIN</td>
+                        <td>@vehicle.Mileage km</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Details"
+                                   asp-route-id="@vehicle.VehicleId"
+                                   class="btn btn-sm btn-info">
+                                    Details
+                                </a>
 
-                <td>
-                    <a asp-action="Details"
-                       asp-route-id="@vehicle.VehicleId"
-                       class="btn btn-info btn-sm">
-                        Details
-                    </a>
+                                <a asp-action="Edit"
+                                   asp-route-id="@vehicle.VehicleId"
+                                   class="btn btn-sm btn-warning">
+                                    Edit
+                                </a>
 
-                    <a asp-action="Edit"
-                       asp-route-id="@vehicle.VehicleId"
-                       class="btn btn-warning btn-sm">
-                        Edit
-                    </a>
-
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a asp-action="Delete"
-                           asp-route-id="@vehicle.VehicleId"
-                           class="btn btn-danger btn-sm">
-                            Delete
-                        </a>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                                <a asp-action="Delete"
+                                   asp-route-id="@vehicle.VehicleId"
+                                   class="btn btn-sm btn-danger">
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

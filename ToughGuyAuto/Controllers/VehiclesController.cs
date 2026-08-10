@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ToughGuyAuto.BLL.Interfaces;
 using ToughGuyAuto.Models;
+using ToughGuyAuto.ViewModels;
 
 namespace ToughGuyAuto.Controllers;
 
@@ -19,6 +20,7 @@ public class VehiclesController : Controller
         _vehicleService = vehicleService;
         _userManager = userManager;
     }
+
 
     public async Task<IActionResult> Index()
     {
@@ -64,7 +66,6 @@ public class VehiclesController : Controller
         return View(vehicle);
     }
 
-    [HttpGet]
     public IActionResult Create()
     {
         return View();
@@ -72,11 +73,12 @@ public class VehiclesController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Vehicle vehicle)
+    public async Task<IActionResult> Create(
+    [FromForm] VehicleCreateViewModel model1) // there is a trick: don't name model too eazy
     {
         if (!ModelState.IsValid)
         {
-            return View(vehicle);
+            return View(model1);
         }
 
         var userId = _userManager.GetUserId(User);
@@ -86,13 +88,24 @@ public class VehiclesController : Controller
             return Challenge();
         }
 
-        vehicle.UserId = userId;
+        var vehicle = new Vehicle
+        {
+            UserId = userId,
+            Make = model1.Make.Trim(),
+            Model = model1.Model.Trim(),
+            Year = model1.Year,
+            LicensePlate = model1.LicensePlate.Trim(),
+            VIN = model1.VIN.Trim().ToUpper(),
+            Mileage = model1.Mileage
+        };
+
+        
 
         await _vehicleService.CreateAsync(vehicle);
 
         return RedirectToAction(nameof(Index));
     }
-
+    
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
@@ -103,68 +116,76 @@ public class VehiclesController : Controller
             return NotFound();
         }
 
-        if (!User.IsInRole("Admin"))
+        if (!await CanAccessVehicle(vehicle))
         {
-            var userId = _userManager.GetUserId(User);
-
-            if (userId == null ||
-                vehicle.UserId != userId)
-            {
-                return Forbid();
-            }
+            return Forbid();
         }
 
-        return View(vehicle);
+        var model = new VehicleEditViewModel
+        {
+            VehicleId = vehicle.VehicleId,
+            Make = vehicle.Make,
+            Model = vehicle.Model,
+            Year = vehicle.Year,
+            LicensePlate = vehicle.LicensePlate,
+            VIN = vehicle.VIN,
+            Mileage = vehicle.Mileage
+        };
+
+        return View(model);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(
         int id,
-        Vehicle vehicle)
+        [FromForm] VehicleEditViewModel model1)
     {
-        if (id != vehicle.VehicleId)
+        if (id != model1.VehicleId)
         {
-            return NotFound();
-        }
-
-        var existingVehicle =
-            await _vehicleService.GetByIdAsync(id);
-
-        if (existingVehicle == null)
-        {
-            return NotFound();
-        }
-
-        if (!User.IsInRole("Admin"))
-        {
-            var userId = _userManager.GetUserId(User);
-
-            if (userId == null ||
-                existingVehicle.UserId != userId)
-            {
-                return Forbid();
-            }
-
-            vehicle.UserId = userId;
-        }
-        else
-        {
-            vehicle.UserId = existingVehicle.UserId;
+            return BadRequest();
         }
 
         if (!ModelState.IsValid)
         {
-            return View(vehicle);
+            return View(model1);
         }
 
-        await _vehicleService.UpdateAsync(vehicle);
+        var vehicle = await _vehicleService.GetByIdAsync(id);
+
+        if (vehicle == null)
+        {
+            return NotFound();
+        }
+
+        if (!await CanAccessVehicle(vehicle))
+        {
+            return Forbid();
+        }
+
+        vehicle.Make = model1.Make.Trim();
+        vehicle.Model = model1.Model.Trim();
+        vehicle.Year = model1.Year;
+        vehicle.LicensePlate = model1.LicensePlate.Trim();
+        vehicle.VIN = model1.VIN.Trim().ToUpper();
+        vehicle.Mileage = model1.Mileage;
+
+        try
+        {
+            await _vehicleService.UpdateAsync(vehicle);
+        }
+        catch (ArgumentException ex)
+        {
+            ModelState.AddModelError(
+                string.Empty,
+                ex.Message);
+
+            return View(model1);
+        }
 
         return RedirectToAction(nameof(Index));
     }
 
-    [Authorize(Roles = "Admin")]
-    [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
         var vehicle = await _vehicleService.GetByIdAsync(id);
@@ -174,18 +195,51 @@ public class VehiclesController : Controller
             return NotFound();
         }
 
+        if (!await CanAccessVehicle(vehicle))
+        {
+            return Forbid();
+        }
+
         return View(vehicle);
     }
 
-    [Authorize(Roles = "Admin")]
+    // post Vehicles or Delete
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
+        var vehicle = await _vehicleService.GetByIdAsync(id);
+
+        if (vehicle == null)
+        {
+            return NotFound();
+        }
+
+        if (!await CanAccessVehicle(vehicle))
+        {
+            return Forbid();
+        }
+
         await _vehicleService.DeleteAsync(id);
 
         return RedirectToAction(nameof(Index));
     }
+
+    private async Task<bool> CanAccessVehicle(
+        Vehicle vehicle)
+    {
+        if (User.IsInRole("Admin"))
+        {
+            return true;
+        }
+
+        var userId = _userManager.GetUserId(User);
+
+        if (userId == null)
+        {
+            return false;
+        }
+
+        return vehicle.UserId == userId;
+    }
 }
-
-

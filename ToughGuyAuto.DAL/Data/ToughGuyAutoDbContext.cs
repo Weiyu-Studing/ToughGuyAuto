@@ -11,7 +11,6 @@ public class ToughGuyAutoDbContext
         DbContextOptions<ToughGuyAutoDbContext> options)
         : base(options)
     {
-
     }
 
     public DbSet<Vehicle> Vehicles { get; set; }
@@ -26,38 +25,38 @@ public class ToughGuyAutoDbContext
 
         // Vehicle
         builder.Entity<Vehicle>(entity =>
-            {
-                entity.HasKey(v => v.VehicleId);
+        {
+            entity.HasKey(v => v.VehicleId);
 
-                entity.Property(v => v.Make)
-                    .IsRequired()
-                    .HasMaxLength(50);
+            entity.Property(v => v.Make)
+                .IsRequired()
+                .HasMaxLength(50);
 
-                entity.Property(v => v.Model)
-                    .IsRequired()
-                    .HasMaxLength(50);
+            entity.Property(v => v.Model)
+                .IsRequired()
+                .HasMaxLength(50);
 
-                entity.Property(v => v.Year)
-                    .IsRequired();
+            entity.Property(v => v.Year)
+                .IsRequired();
 
-                entity.Property(v => v.LicensePlate)
-                    .IsRequired()
-                    .HasMaxLength(20);
+            entity.Property(v => v.LicensePlate)
+                .IsRequired()
+                .HasMaxLength(20);
 
-                entity.Property(v => v.VIN)
-                    .IsRequired()
-                    .HasMaxLength(17);
+            entity.Property(v => v.VIN)
+                .IsRequired()
+                .HasMaxLength(17);
 
-                entity.Property(v => v.Mileage)
-                    .IsRequired();
-            });
+            entity.Property(v => v.Mileage)
+                .IsRequired();
+        });
 
-        // Vehicle to MaintenanceRecord
+        // Vehicle -> MaintenanceRecord
         builder.Entity<Vehicle>()
-        .HasMany(v => v.MaintenanceRecords)
-        .WithOne(m => m.Vehicle)
-        .HasForeignKey(m => m.VehicleId)
-        .OnDelete(DeleteBehavior.Cascade);
+            .HasMany(v => v.MaintenanceRecords)
+            .WithOne(m => m.Vehicle)
+            .HasForeignKey(m => m.VehicleId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         // MaintenanceRecord
         builder.Entity<MaintenanceRecord>(entity =>
@@ -82,12 +81,12 @@ public class ToughGuyAutoDbContext
                 .HasMaxLength(1000);
         });
 
-        // MaintenanceRecord to ServiceType
+        // MaintenanceRecord <-> ServiceType
         builder.Entity<MaintenanceRecord>()
-        .HasMany(m => m.ServiceTypes)
-        .WithMany(s => s.MaintenanceRecords)
-        .UsingEntity(j =>
-        j.ToTable("MaintenanceRecordServiceTypes"));
+            .HasMany(m => m.ServiceTypes)
+            .WithMany(s => s.MaintenanceRecords)
+            .UsingEntity(j =>
+                j.ToTable("MaintenanceRecordServiceTypes"));
 
         // ServiceType
         builder.Entity<ServiceType>(entity =>
@@ -105,13 +104,7 @@ public class ToughGuyAutoDbContext
                 .IsUnique();
         });
 
-        // ApplicationUser to Vehicle
-        builder.Entity<ApplicationUser>()
-            .HasMany(u => u.Vehicles)
-            .WithOne()
-            .HasForeignKey(v => v.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-
+        // ApplicationUser -> Vehicle
         builder.Entity<ApplicationUser>()
             .HasMany(u => u.Vehicles)
             .WithOne(v => v.User)

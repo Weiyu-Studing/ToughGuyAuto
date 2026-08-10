@@ -10,15 +10,13 @@ public interface IVehicleService
 
     Task<Vehicle?> GetByIdAsync(int id);
 
-    Task<bool> CanUserAccessAsync(int vehicleId, string userId);
+    Task<bool> CanUserAccessAsync(
+        int vehicleId,
+        string userId);
 
     Task CreateAsync(Vehicle vehicle);
 
     Task UpdateAsync(Vehicle vehicle);
-
-    List<Vehicle> GetAll();
-
-    List<Vehicle> GetByUserId(string userId);
 
     Task DeleteAsync(int id);
 }

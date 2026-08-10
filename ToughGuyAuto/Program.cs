@@ -7,7 +7,6 @@ using ToughGuyAuto.DAL.Interfaces;
 using ToughGuyAuto.DAL.Repositories;
 using ToughGuyAuto.Models;
 
-
 namespace ToughGuyAuto
 {
     public class Program
