@@ -203,7 +203,7 @@ public class VehiclesController : Controller
         return View(vehicle);
     }
 
-    // post Vehicles or Delete
+    // Delete
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)

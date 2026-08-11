@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToughGuyAuto.DAL.Data;
 
@@ -11,9 +12,11 @@ using ToughGuyAuto.DAL.Data;
 namespace ToughGuyAuto.DAL.Migrations
 {
     [DbContext(typeof(ToughGuyAutoDbContext))]
-    partial class ToughGuyAutoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260811010037_DefaultServiceTypes")]
+    partial class DefaultServiceTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

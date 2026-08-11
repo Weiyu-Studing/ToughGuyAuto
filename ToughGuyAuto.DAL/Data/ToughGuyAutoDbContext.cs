@@ -104,6 +104,39 @@ public class ToughGuyAutoDbContext
                 .IsUnique();
         });
 
+        builder.Entity<ServiceType>().HasData(
+            new ServiceType
+            {
+                ServiceTypeId = 1,
+                Name = "Oil Change",
+                Description = "Change engine oil and oil filter"
+            },
+            new ServiceType
+            {
+                ServiceTypeId = 2,
+                Name = "Brake Service",
+                Description = "Inspect or replace brake components"
+            },
+            new ServiceType
+            {
+                ServiceTypeId = 3,
+                Name = "Tire Rotation",
+                Description = "Rotate vehicle tires"
+            },
+            new ServiceType
+            {
+                ServiceTypeId = 4,
+                Name = "Battery Replacement",
+                Description = "Replace vehicle battery"
+            },
+            new ServiceType
+            {
+                ServiceTypeId = 5,
+                Name = "Engine Repair",
+                Description = "Repair engine related problems"
+            }
+        );
+
         // ApplicationUser -> Vehicle
         builder.Entity<ApplicationUser>()
             .HasMany(u => u.Vehicles)

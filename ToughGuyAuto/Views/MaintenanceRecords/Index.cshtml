@@ -1,0 +1,78 @@
+﻿@model List<ToughGuyAuto.Models.MaintenanceRecord>
+
+@{
+    ViewData["Title"] = "Maintenance Records";
+}
+
+<h1>Maintenance Records</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">
+        Add Maintenance Record
+    </a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Vehicle</th>
+            <th>Date</th>
+            <th>Mileage</th>
+            <th>Cost</th>
+            <th>Description</th>
+            <th>Service Type</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Vehicle.Make @item.Vehicle.Model
+                </td>
+
+                <td>
+                    @item.ServiceDate.ToShortDateString()
+                </td>
+
+                <td>
+                    @item.Mileage
+                </td>
+
+                <td>
+                    $@item.Cost
+                </td>
+
+                <td>
+                    @item.Description
+                </td>
+
+                <td>
+                    @foreach (var service in item.ServiceTypes)
+                    {
+                        <span>@service.Name </span>
+                    }
+                </td>
+
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@item.MaintenanceRecordId">
+                        Details
+                    </a>
+                    |
+                    <a asp-action="Edit"
+                       asp-route-id="@item.MaintenanceRecordId">
+                        Edit
+                    </a>
+                    |
+                    <a asp-action="Delete"
+                       asp-route-id="@item.MaintenanceRecordId">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

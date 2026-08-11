@@ -1,0 +1,61 @@
+﻿@model ToughGuyAuto.Models.MaintenanceRecord
+
+@{
+    ViewData["Title"] = "Maintenance Details";
+}
+
+<h1>Maintenance Details</h1>
+
+<div>
+    <h4>Vehicle</h4>
+    <p>
+        @Model.Vehicle.Make @Model.Vehicle.Model
+    </p>
+</div>
+
+<div>
+    <strong>Service Date:</strong>
+    @Model.ServiceDate.ToShortDateString()
+</div>
+
+<div>
+    <strong>Mileage:</strong>
+    @Model.Mileage
+</div>
+
+<div>
+    <strong>Cost:</strong>
+    $@Model.Cost
+</div>
+
+<div>
+    <strong>Description:</strong>
+    @Model.Description
+</div>
+
+<div>
+    <strong>Notes:</strong>
+    @Model.Notes
+</div>
+
+<div>
+    <strong>Service Types:</strong>
+
+    @foreach (var service in Model.ServiceTypes)
+    {
+        <span>@service.Name </span>
+    }
+</div>
+
+<br />
+
+<a asp-action="Edit"
+   asp-route-id="@Model.MaintenanceRecordId"
+   class="btn btn-primary">
+    Edit
+</a>
+
+<a asp-action="Index"
+   class="btn btn-secondary">
+    Back
+</a>
