@@ -98,10 +98,12 @@
                        name="SelectedServiceTypeIds"
                        value="@service.ServiceTypeId"
                 @(Model.SelectedServiceTypeIds.Contains(service.ServiceTypeId)
-                           ? "checked"
-                           : "") />
+                                  ? "checked"
+                                  : "") />
 
-                @service.Name
+                <span class="service-name">
+                    @service.Name
+                </span>
             </div>
         }
 
