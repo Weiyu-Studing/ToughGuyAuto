@@ -46,7 +46,6 @@ body {
     font-size: 20px;
 }
 
-/* All tables */
 .table {
     color: white;
     background-color: rgba(0, 0, 0, 0.65);
@@ -100,4 +99,25 @@ h1 {
 .tough-footer a:hover {
     color: #cccccc;
     text-decoration: underline;
+}
+
+label {
+    color: #ffb000 !important;
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    text-shadow: 1px 1px 1px #000000, 2px 2px 3px rgba(0, 0, 0, 0.9);
+}
+
+dt {
+    color: white !important;
+    font-weight: bold;
+}
+
+dd {
+    color: white !important;
+}
+
+p {
+    color: white;
 }
