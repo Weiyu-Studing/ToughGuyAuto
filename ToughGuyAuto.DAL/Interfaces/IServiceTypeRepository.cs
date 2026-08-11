@@ -2,6 +2,7 @@
 
 namespace ToughGuyAuto.DAL.Interfaces;
 
+// This interface defines the database operations for ServiceType entities.
 public interface IServiceTypeRepository
 {
     Task<List<ServiceType>> GetAllAsync();

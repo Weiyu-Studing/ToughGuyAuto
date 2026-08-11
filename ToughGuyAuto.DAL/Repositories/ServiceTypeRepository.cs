@@ -5,6 +5,9 @@ using ToughGuyAuto.Models;
 
 namespace ToughGuyAuto.DAL.Repositories;
 
+/* This repository performs EF Core database operations
+   for ServiceType entities. It keeps database code out of
+   ServiceTypesController and ServiceTypeService. */
 public class ServiceTypeRepository : IServiceTypeRepository
 {
     private readonly ToughGuyAutoDbContext _context;

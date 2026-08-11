@@ -4,6 +4,7 @@ using ToughGuyAuto.Models;
 
 namespace ToughGuyAuto.BLL.Services;
 
+// This service contains the business logic for maintenance records.
 public class MaintenanceRecordService
     : IMaintenanceRecordService
 {
@@ -31,6 +32,8 @@ public class MaintenanceRecordService
         return await _repository.GetByIdAsync(id);
     }
 
+    // Check ownership through the related Vehicle.
+    // user's ID must be checked through record.Vehicle.UserId.
     public async Task<bool> CanUserAccessAsync(
         int recordId,
         string userId)
@@ -45,6 +48,8 @@ public class MaintenanceRecordService
         return record.Vehicle.UserId == userId;
     }
 
+    // Mileage and Cost cannot be negative
+    // The Controller adds the message to ModelState for the View.
     public async Task CreateAsync(MaintenanceRecord record)
     {
         if (record.Mileage < 0)
@@ -62,6 +67,7 @@ public class MaintenanceRecordService
         await _repository.AddAsync(record);
     }
 
+    // Apply the same business rules when updating an existing record
     public async Task UpdateAsync(MaintenanceRecord record)
     {
         if (record.Mileage < 0)

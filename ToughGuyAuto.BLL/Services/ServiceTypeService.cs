@@ -24,6 +24,8 @@ public class ServiceTypeService : IServiceTypeService
         return await _repository.GetByIdAsync(id);
     }
 
+    // A service type can't be empty.
+    // IsNullOrWhiteSpace rejects null, empty text and spaces-only text.
     public async Task CreateAsync(ServiceType serviceType)
     {
         if (string.IsNullOrWhiteSpace(serviceType.Name))

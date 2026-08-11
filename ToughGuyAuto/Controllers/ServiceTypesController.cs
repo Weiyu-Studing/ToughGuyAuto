@@ -25,7 +25,8 @@ public class ServiceTypesController : Controller
         return View(serviceTypes);
     }
 
-    // Show details
+    // Retrieve one service type by its primary key.
+    // Return HTTP 404 if it does not exist.
     public async Task<IActionResult> Details(int id)
     {
         var serviceType =
@@ -46,7 +47,11 @@ public class ServiceTypesController : Controller
         return View();
     }
 
-    // Create
+    // Logic:
+    // 1. Check ModelState validation.
+    // 2. Ask the service to validate and save the entity.
+    // 3. Display a business-rule error if the service rejects it.
+    // 4. Redirect to Index after a successful save.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(
@@ -61,6 +66,7 @@ public class ServiceTypesController : Controller
         {
             await _serviceTypeService.CreateAsync(serviceType);
         }
+        // Add the service layer error to ModelState so the validation summary can display it
         catch (ArgumentException ex)
         {
             ModelState.AddModelError("", ex.Message);
@@ -86,7 +92,12 @@ public class ServiceTypesController : Controller
         return View(serviceType);
     }
 
-    // Edit
+    // Logic:
+    // 1. Check that the URL ID matches the entity ID.
+    // 2. Check ModelState validation.
+    // 3. Ask the service to validate and update the entity.
+    // 4. Display an error if a business rule fails.
+    // 5. Redirect to Index after a successful update.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(

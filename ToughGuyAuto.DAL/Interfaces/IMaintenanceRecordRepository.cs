@@ -2,6 +2,7 @@
 
 namespace ToughGuyAuto.DAL.Interfaces;
 
+// This interface defines the database operations for MaintenanceRecord entities.
 public interface IMaintenanceRecordRepository
 {
     Task<List<MaintenanceRecord>> GetAllAsync();

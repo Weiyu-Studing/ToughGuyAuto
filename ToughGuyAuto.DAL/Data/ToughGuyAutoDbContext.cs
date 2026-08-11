@@ -9,9 +9,7 @@ public class ToughGuyAutoDbContext
 {
     public ToughGuyAutoDbContext(
         DbContextOptions<ToughGuyAutoDbContext> options)
-        : base(options)
-    {
-    }
+        : base(options) { }
 
     public DbSet<Vehicle> Vehicles { get; set; }
 
@@ -23,7 +21,7 @@ public class ToughGuyAutoDbContext
     {
         base.OnModelCreating(builder);
 
-        // Vehicle
+        // Vehicle entity
         builder.Entity<Vehicle>(entity =>
         {
             entity.HasKey(v => v.VehicleId);
@@ -51,14 +49,17 @@ public class ToughGuyAutoDbContext
                 .IsRequired();
         });
 
-        // Vehicle -> MaintenanceRecord
+        /* one-to-many relationship:
+           one Vehicle can have many MaintenanceRecords, but each MaintenanceRecord belongs to one Vehicle.
+           VehicleId is stored in MaintenanceRecord as the foreign key.
+           Cascade means deleting a vehicle also deletes all of its maintenance records. */
         builder.Entity<Vehicle>()
             .HasMany(v => v.MaintenanceRecords)
             .WithOne(m => m.Vehicle)
             .HasForeignKey(m => m.VehicleId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // MaintenanceRecord
+        // MaintenanceRecord entity
         builder.Entity<MaintenanceRecord>(entity =>
         {
             entity.HasKey(m => m.MaintenanceRecordId);
@@ -69,6 +70,7 @@ public class ToughGuyAutoDbContext
             entity.Property(m => m.Mileage)
                 .IsRequired();
 
+            // Store Cost with up to 10 total digits and 2 digits after the decimal point.
             entity.Property(m => m.Cost)
                 .IsRequired()
                 .HasColumnType("decimal(10,2)");
@@ -81,14 +83,18 @@ public class ToughGuyAutoDbContext
                 .HasMaxLength(1000);
         });
 
-        // MaintenanceRecord <-> ServiceType
+        /* many-to-many relationship:
+           one MaintenanceRecord can contain many ServiceTypes, and one ServiceType can be used by many MaintenanceRecords.
+           EF Core creates a join table to store the IDs from both tables. 
+         **For example, an oil change and tire rotation can belong to the same maintenance record.
+           The join table connects that maintenance record with both service types.*/
         builder.Entity<MaintenanceRecord>()
             .HasMany(m => m.ServiceTypes)
             .WithMany(s => s.MaintenanceRecords)
             .UsingEntity(j =>
                 j.ToTable("MaintenanceRecordServiceTypes"));
 
-        // ServiceType
+        // ServiceType entity
         builder.Entity<ServiceType>(entity =>
         {
             entity.HasKey(s => s.ServiceTypeId);
@@ -100,10 +106,12 @@ public class ToughGuyAutoDbContext
             entity.Property(s => s.Description)
                 .HasMaxLength(500);
 
+            //The unique index prevents two service types from having the same name.
             entity.HasIndex(s => s.Name)
                 .IsUnique();
         });
 
+        // Default service type. We can add, edit, or delete them by logging into the admin account and using the ServiceType function.
         builder.Entity<ServiceType>().HasData(
             new ServiceType
             {
@@ -137,7 +145,9 @@ public class ToughGuyAutoDbContext
             }
         );
 
-        // ApplicationUser -> Vehicle
+        /* relationship between Identity users and vehicles 
+           one ApplicationUser can own many Vehicles, but each Vehicle belongs to one ApplicationUser. 
+           If a user is deleted directly from database, that user's vehicles will also be deleted. */
         builder.Entity<ApplicationUser>()
             .HasMany(u => u.Vehicles)
             .WithOne(v => v.User)

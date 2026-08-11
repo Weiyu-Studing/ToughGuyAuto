@@ -4,6 +4,7 @@ namespace ToughGuyAuto.ViewModels;
 
 public class VehicleEditViewModel
 {
+    // Identify the existing vehicle being edited.
     public int VehicleId { get; set; }
 
     [Required]

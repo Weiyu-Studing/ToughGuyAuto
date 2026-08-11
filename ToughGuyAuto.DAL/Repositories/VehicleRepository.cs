@@ -13,12 +13,17 @@ public class VehicleRepository : IVehicleRepository
     {
         _context = context;
     }
+
+    // Return every vehicle.
+    // AsNoTracking is used because the Index page only reads the data.
     public async Task<List<Vehicle>> GetAllAsync()
     {
         return await _context.Vehicles
             .AsNoTracking()
             .ToListAsync();
     }
+
+    // Where filters the Vehicles table by UserId
     public async Task<List<Vehicle>> GetByUserIdAsync(string userId)
     {
         return await _context.Vehicles
@@ -26,6 +31,8 @@ public class VehicleRepository : IVehicleRepository
             .AsNoTracking()
             .ToListAsync();
     }
+
+    // FirstOrDefaultAsync returns one matching vehicle, or null if a vehicle with this ID does not exist.
     public async Task<Vehicle?> GetByIdAsync(int id)
     {
         return await _context.Vehicles

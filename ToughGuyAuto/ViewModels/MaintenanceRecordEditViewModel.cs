@@ -3,7 +3,7 @@
 namespace ToughGuyAuto.ViewModels;
 
 public class MaintenanceRecordEditViewModel
-{
+{   
     public int MaintenanceRecordId { get; set; }
 
     [Required]
