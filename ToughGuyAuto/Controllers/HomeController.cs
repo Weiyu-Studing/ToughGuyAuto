@@ -15,9 +15,7 @@ namespace ToughGuyAuto.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction(
-                "Index",
-                "Vehicles");
+            return View();
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,30 @@
+﻿@model ToughGuyAuto.Models.ServiceType
+
+@{
+    ViewData["Title"] = "Service Type Details";
+}
+
+<h1>Service Type Details</h1>
+
+<div>
+    <strong>Name:</strong>
+    @Model.Name
+</div>
+
+<div>
+    <strong>Description:</strong>
+    @Model.Description
+</div>
+
+<br />
+
+<a asp-action="Edit"
+   asp-route-id="@Model.ServiceTypeId"
+   class="btn btn-primary">
+    Edit
+</a>
+
+<a asp-action="Index"
+   class="btn btn-secondary">
+    Back
+</a>

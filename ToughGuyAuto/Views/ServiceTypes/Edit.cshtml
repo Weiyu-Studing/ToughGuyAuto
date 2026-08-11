@@ -1,0 +1,48 @@
+﻿@model ToughGuyAuto.Models.ServiceType
+
+@{
+    ViewData["Title"] = "Edit Service Type";
+}
+
+<h1>Edit Service Type</h1>
+
+<form asp-action="Edit" method="post">
+
+    <input type="hidden"
+           asp-for="ServiceTypeId" />
+
+    <div asp-validation-summary="All"
+         class="text-danger">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Name"
+               class="form-label">
+            Name
+        </label>
+
+        <input asp-for="Name"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description"
+               class="form-label">
+            Description
+        </label>
+
+        <textarea asp-for="Description"
+                  class="form-control"></textarea>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Save
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+
+</form>
