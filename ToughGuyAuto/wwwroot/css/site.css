@@ -20,3 +20,64 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.page-background {
+    min-height: calc(100vh - 57px);
+    background-image: url('/images/ToughtGuyAuto-background-img.png');
+    background-size: contain;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-color: black;
+}
+
+.home-content {
+    color: white;
+    padding-top: 80px;
+}
+
+.home-content h1 {
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.home-content p {
+    color: #f5f5f5;
+    font-size: 20px;
+}
+
+/* All tables */
+.table {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.65);
+}
+
+h1 {
+    color: white !important;
+    font-weight: bold;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Table header */
+.table th {
+    color: white !important;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Table data */
+.table td {
+    color: white !important;
+    background-color: rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Links inside tables */
+.table a {
+    color: white;
+    font-weight: 500;
+}
+
+/* Link hover */
+.table a:hover {
+    color: #cccccc;
+}
