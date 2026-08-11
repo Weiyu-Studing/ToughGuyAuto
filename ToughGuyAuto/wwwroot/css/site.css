@@ -58,26 +58,46 @@ h1 {
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
 }
 
-/* Table header */
 .table th {
     color: white !important;
     font-weight: bold;
     background-color: rgba(0, 0, 0, 0.8) !important;
 }
 
-/* Table data */
 .table td {
     color: white !important;
     background-color: rgba(0, 0, 0, 0.55) !important;
 }
 
-/* Links inside tables */
 .table a {
     color: white;
     font-weight: 500;
 }
 
-/* Link hover */
 .table a:hover {
     color: #cccccc;
+}
+
+.privacy-text {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 2px 2px 6px black;
+}
+
+.tough-footer {
+    background-color: black;
+    color: white;
+    padding: 15px 0;
+    border-top: 1px solid #444;
+}
+
+.tough-footer a {
+    color: white;
+    text-decoration: none;
+}
+
+.tough-footer a:hover {
+    color: #cccccc;
+    text-decoration: underline;
 }
