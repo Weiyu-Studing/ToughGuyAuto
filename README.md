@@ -118,109 +118,57 @@ These credentials are included for project demonstration and testing only.
 
 ### Permission Summary
 
-  
-
-| Feature | Anonymous Visitor | Regular User | Administrator |
-
+| Feature | Administrator | Regular User | Anonymous Visitor |
 |---|:---:|:---:|:---:|
-
 | View home page | ✅ | ✅ | ✅ |
-
 | Register and sign in | ✅ | ✅ | ✅ |
-
-| View own vehicles | ❌ | ✅ | ✅ |
-
-| View all vehicles | ❌ | ❌ | ✅ |
-
-| Create a vehicle | ❌ | ✅ | ✅ |
-
-| Edit own vehicle | ❌ | ✅ | ✅ |
-
-| Delete own vehicle | ❌ | ✅ | ✅ |
-
-| Edit or delete another user's vehicle | ❌ | ❌ | ✅ |
-
-| View own maintenance records | ❌ | ✅ | ✅ |
-
-| View all maintenance records | ❌ | ❌ | ✅ |
-
-| Create maintenance records | ❌ | ❌ | ✅ |
-
-| Edit maintenance records | ❌ | ❌ | ✅ |
-
-| Delete maintenance records | ❌ | ❌ | ✅ |
-
-| Manage service types | ❌ | ❌ | ✅ |
-
-
+| View own vehicles | ✅ | ✅ | ❌ |
+| View all vehicles | ✅ | ❌ | ❌ |
+| Create a vehicle | ✅ | ✅ | ❌ |
+| Edit own vehicle | ✅ | ✅ | ❌ |
+| Delete own vehicle | ✅ | ✅ | ❌ |
+| Edit or delete another user's vehicle | ✅ | ❌ | ❌ |
+| View own maintenance records | ✅ | ✅ | ❌ |
+| View all maintenance records | ✅ | ❌ | ❌ |
+| Create maintenance records | ✅ | ❌ | ❌ |
+| Edit maintenance records | ✅ | ❌ | ❌ |
+| Delete maintenance records | ✅ | ❌ | ❌ |
+| Manage service types | ✅ | ❌ | ❌ |
 
 ## ToughGuyAuto Table Schema
 
-  
-
 ### Vehicles
 
-  
-
 | Column | Type | Key | Description |
-
 |---|---|---|---|
-
 | `VehicleId` | `INT` | PK | Unique vehicle identifier |
-
 | `UserId` | `NVARCHAR(450)` | FK | Identity ID of the vehicle owner |
-
-| `Make` | `NVARCHAR(50)` |  | Vehicle manufacturer |
-
-| `Model` | `NVARCHAR(50)` |  | Vehicle model |
-
-| `Year` | `INT` |  | Vehicle year |
-
-| `LicensePlate` | `NVARCHAR(20)` |  | Licence plate number |
-
-| `VIN` | `NVARCHAR(17)` |  | Seventeen-character VIN |
-
-| `Mileage` | `INT` |  | Current vehicle mileage |
-
-  
+| `Make` | `NVARCHAR(50)` | | Vehicle manufacturer |
+| `Model` | `NVARCHAR(50)` | | Vehicle model |
+| `Year` | `INT` | | Vehicle year |
+| `LicensePlate` | `NVARCHAR(20)` | | Licence plate number |
+| `VIN` | `NVARCHAR(17)` | | Seventeen-character VIN |
+| `Mileage` | `INT` | | Current vehicle mileage |
 
 ### MaintenanceRecords
 
-  
-
 | Column | Type | Key | Description |
-
 |---|---|---|---|
-
 | `MaintenanceRecordId` | `INT` | PK | Unique maintenance record identifier |
-
 | `VehicleId` | `INT` | FK | Vehicle connected to the record |
-
-| `ServiceDate` | `DATETIME2` |  | Date of maintenance |
-
-| `Mileage` | `INT` |  | Mileage at the time of service |
-
-| `Cost` | `DECIMAL(10,2)` |  | Total maintenance cost |
-
-| `Description` | `NVARCHAR(500)` |  | Description of the maintenance work |
-
-| `Notes` | `NVARCHAR(1000)` |  | Optional additional information |
-
-  
+| `ServiceDate` | `DATETIME2` | | Date of maintenance |
+| `Mileage` | `INT` | | Mileage at the time of service |
+| `Cost` | `DECIMAL(10,2)` | | Total maintenance cost |
+| `Description` | `NVARCHAR(500)` | | Description of the maintenance work |
+| `Notes` | `NVARCHAR(1000)` | | Optional additional information |
 
 ### ServiceTypes
 
-  
-
 | Column | Type | Key | Description |
-
 |---|---|---|---|
-
 | `ServiceTypeId` | `INT` | PK | Unique service type identifier |
-
 | `Name` | `NVARCHAR(100)` | UNIQUE | Name of the service |
-
-| `Description` | `NVARCHAR(500)` |  | Description of the service |
+| `Description` | `NVARCHAR(500)` | | Description of the service |
 
 
 ## Interfaces, Services and Repositories
